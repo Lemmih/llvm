@@ -175,6 +175,7 @@ module LLVM.Wrapper.Core
 
     -- ** Memory
     , buildAlloca
+    , buildArrayAlloca
     , buildLoad
     , buildGEP
     , buildStructGEP
@@ -731,6 +732,9 @@ buildFCmp b p l r n = withForeignPtr b $ \b' -> withCString n $ FFI.buildFCmp b'
 
 buildAlloca :: Builder -> Type -> String -> IO Value
 buildAlloca b ty name = withForeignPtr b $ \b' -> withCString name $ FFI.buildAlloca b' ty
+
+buildArrayAlloca :: Builder -> Type -> Value -> String -> IO Value
+buildArrayAlloca b ty val name = withForeignPtr b $ \b' -> withCString name $ FFI.buildArrayAlloca b' ty val
 
 buildLoad :: Builder -> Value -> String -> IO Value
 buildLoad b ptr name = withForeignPtr b $ \b' -> withCString name $ FFI.buildLoad b' ptr
