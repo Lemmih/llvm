@@ -174,6 +174,8 @@ module LLVM.Wrapper.Core
     , buildICmp
 
     -- ** Memory
+    , buildMalloc
+    , buildArrayMalloc
     , buildAlloca
     , buildArrayAlloca
     , buildLoad
@@ -729,6 +731,12 @@ buildICmp b p l r n = withForeignPtr b $ \b' -> withCString n $ FFI.buildICmp b'
 
 buildFCmp :: Builder -> FPPredicate -> Value -> Value -> String -> IO Value
 buildFCmp b p l r n = withForeignPtr b $ \b' -> withCString n $ FFI.buildFCmp b' (FFI.fromFPPredicate p) l r
+
+buildMalloc :: Builder -> Type -> String -> IO Value
+buildMalloc b ty name = withForeignPtr b $ \b' -> withCString name $ FFI.buildMalloc b' ty
+
+buildArrayMalloc :: Builder -> Type -> Value -> String -> IO Value
+buildArrayMalloc b ty val name = withForeignPtr b $ \b' -> withCString name $ FFI.buildArrayMalloc b' ty val
 
 buildAlloca :: Builder -> Type -> String -> IO Value
 buildAlloca b ty name = withForeignPtr b $ \b' -> withCString name $ FFI.buildAlloca b' ty
