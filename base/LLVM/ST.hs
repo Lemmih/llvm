@@ -532,8 +532,8 @@ defineFunction func cg = do
            unsafeSTToIO (runReaderT (unCG (positionAtEnd bb >> cg)) (CGS b mgs)))
 
 -- Just establish a context
-runCodeGen :: (Monad (m c s), MonadMG m) =>
-              STValue c s -> CodeGen c s a -> ModuleGen c s a
+--runCodeGen :: (Monad (m c s), MonadMG m) =>
+--              STValue c s -> CodeGen c s a -> ModuleGen c s a
 runCodeGen (STV func) cg = do
   bbs <- wrap $ W.getBasicBlocks func
   let cg' = if null bbs then cg else positionAtEnd (STB (last bbs)) >> cg
